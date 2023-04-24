@@ -5,16 +5,18 @@ Para realização do trabalho final foi pensado em desenvolver uma plataforma qu
 
 ## :technologist: Membros da equipe
 
-Antonio Kaio Elias Portela- 495707- Engenharia de Software || 
-Petrucio de Carvalho Neves Silva- 469854- Engenharia da Computação 
+Antonio Kaio Elias Portela- 495707- Engenharia de Software
 
-## :people_holding_hands: Papeis ou tipos de usuário da aplicação
+## :people_holding_hands: Papéis ou tipos de usuário da aplicação
 
 Administrador, Locador, Locatario, Usuário Logado/não logado.
 
 ## :spiral_calendar: Entidades ou tabelas do sistema
 
-Adicionar apartamento, remover apartamento, editar apartamento, listar apartamento.
+Adicionar imóvel, remover imóvel, editar imóvel, listar imóvel. //  
+Adicionar usuário, remover usuário, editar usuário, listar usuário.
+
+
 
 ## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
 
@@ -25,7 +27,7 @@ Adicionar apartamento, remover apartamento, editar apartamento, alocar apartamen
 ## :desktop_computer: Tecnologias e frameworks utilizados
 
 **Frontend:** Vue.js - CSS - HTML
-**Backend:** node.js - Strapi - JavaScript 
+**Backend:** node.js - Strapi - TypeScript 
 
 
 
