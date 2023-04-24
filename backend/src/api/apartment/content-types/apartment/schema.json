@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "apartments",
+  "info": {
+    "singularName": "apartment",
+    "pluralName": "apartments",
+    "displayName": "apartment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "photos": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "rented": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string"
+    },
+    "value": {
+      "type": "biginteger"
+    },
+    "address": {
+      "type": "string"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "apartments"
+    },
+    "Type": {
+      "type": "enumeration",
+      "enum": [
+        "Casa",
+        "Apartamento"
+      ]
+    }
+  }
+}
