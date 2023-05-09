@@ -31,8 +31,8 @@ function logout(){
             <img src="@/assets/user.png" width="30" height="30" alt="img de usuario logado">
           </button>
           <div>
-            <p>Bem vindo, {{ user.user.username }}</p>
-            <button type="button" @click="logout()" id="logout"><i class="bi bi-box-arrow-right" ></i></button>
+            <p>Bem vindo, {{ user.user.username }} <button type="button" @click="logout()" id="logout"><i class="bi-box-arrow-right" ></i></button></p>
+            
           </div>
         </RouterLink>
       </div>
@@ -69,4 +69,8 @@ function logout(){
     background-color: red;
     justify-content: center;
   }
+#logout{
+  padding: 2%;
+}
+  
 </style>
