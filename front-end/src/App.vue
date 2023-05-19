@@ -8,45 +8,47 @@ function logout(){
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary flex-fill justify-content-evenly">
-      <div>
-        <RouterLink to="/" ><img src="./assets/logoAluga.png" width="100"
-            height="70"></RouterLink>
-        
-      </div>  
+  <nav class="navbar navbar-expand-lg bg-body-tertiary flex-fill justify-content-evenly fixed-top mt-3 ">
+    <div>
+      <RouterLink to="/" ><img src="./assets/logoAluga.png" width="100"
+          height="70"></RouterLink>
+      
+    </div>  
 
-      <div class="navlink">
-        <a href="comprar.html"> Comprar</a>
-      </div>
-      <div class="navlink">
-        <RouterLink to="/alugar">Alugar</RouterLink>
-      </div>
-      <div class="navlink">
-        <RouterLink to="/reserva">Fazer Reserva</RouterLink>
-      </div>
+    <div class="navlink">
+      <a href="comprar.html"> Comprar</a>
+    </div>
+    <div class="navlink">
+      <RouterLink to="/alugar">Alugar</RouterLink>
+    </div>
+    <div class="navlink">
+      <RouterLink to="/reserva">Fazer Reserva</RouterLink>
+    </div>
 
-      <div  v-if="user.user" class="linkbotao">
-        <RouterLink to="/login">
-          <button type="button" class="btn btn-red">
-            <img src="@/assets/user.png" width="30" height="30" alt="img de usuario logado">
-          </button>
-          <div>
-            <p>Bem vindo, {{ user.user.username }} <button type="button" @click="logout()" id="logout"><i class="bi-box-arrow-right" ></i></button></p>
-            
-          </div>
-        </RouterLink>
-      </div>
-      <div v-else class="linkbotao">
-        <RouterLink to="/anunciar"><button type="button" class="btn btn-dark">Anunciar</button></RouterLink>
-        
-        <RouterLink to="/login">
-          <button type="button" class="btn btn-danger"><i class="bi bi-person-fill"></i>
-            Entrar</button>
-        </RouterLink>
-      </div>
-    </nav>
-
+    <div  v-if="user.user" class="linkbotao">
+      <RouterLink to="/login">
+        <button type="button" class="btn btn-red">
+          <img src="@/assets/user.png" width="30" height="30" alt="img de usuario logado">
+        </button>
+        <div>
+          <p>Bem vindo, {{ user.user.username }} <button type="button" @click="logout()" id="logout"><i class="bi-box-arrow-right" ></i></button></p>
+          
+        </div>
+      </RouterLink>
+    </div>
+    <div v-else class="linkbotao">
+      <RouterLink to="/anunciar"><button type="button" class="btn btn-dark">Anunciar</button></RouterLink>
+      
+      <RouterLink to="/login">
+        <button type="button" class="btn btn-danger"><i class="bi bi-person-fill"></i>
+          Entrar</button>
+      </RouterLink>
+    </div>
+  </nav>
   <RouterView />
+
+
+  
 </template>
 
 <style scoped>

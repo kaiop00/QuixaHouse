@@ -4,7 +4,7 @@ import LoginView from '@/views/LoginView.vue'
 import { userAuth } from '@/stores/userAuthStore'
 import AlugarView from '@/views/AlugarView.vue'
 import CreateUserFormView from '@/views/CreateUserFormView.vue'
-import AboutView from '@/views/AboutView.vue'
+import ImovelDetail from '@/views/ImovelDetail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,11 +16,6 @@ const router = createRouter({
       meta: {
         auth: true
       }
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: AboutView
     },
     {
       path: '/login',
@@ -36,6 +31,11 @@ const router = createRouter({
       path: '/inscrever',
       name: 'inscrever',
       component: CreateUserFormView
+    },
+    {
+      path: '/imovels/:id',
+      name: ImovelDetail,
+      component: ImovelDetail
     }
   ]
 })
