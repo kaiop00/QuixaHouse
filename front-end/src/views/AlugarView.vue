@@ -4,7 +4,7 @@
   import { onBeforeMount, onMounted, reactive, ref } from 'vue';
   import ImovelCard from '@/components/imovelCard.vue'
   import { api } from '@/service/http'
-  import type { Apartment } from '@/Entity/Apartments';
+  import type { Imovel } from '@/Entity/Imovel';
   import { coverURL } from '@/service/uploadUtil';
   // interface Cover {
   //   data: {
@@ -23,7 +23,7 @@
   //   address: string,
   //   Type: string,
   // }
-  let apartments = ref<Apartment[]>([]);
+  let apartments = ref<Imovel[]>([]);
     
   // onMounted( async () => {
   //   await api.get("/apartments", {
@@ -55,9 +55,11 @@
           <ImovelCard
             :id="apartment.id"
             :description="apartment.attributes.description"
-            :value="apartment.attributes.value"
-            :photos="coverURL(apartment.attributes.photos.data.attributes.url)"
-            :address="apartment.attributes.address"
+            :value= "apartment.attributes.value"
+            :photos="coverURL(apartment.attributes.photos?.data?.attributes.url)"
+            :street="apartment.attributes.street"
+            :district="apartment.attributes.district"
+            :number="apartment.attributes.number"
           />
         </div>
       </div>

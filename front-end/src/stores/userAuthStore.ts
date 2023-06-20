@@ -4,9 +4,11 @@ import { api } from '@/service/http';
 import type { User } from '@/Entity/User';
 
 export const userAuth = defineStore('auth', () => {
-  let token = ref(localStorage.getItem('token'))
-  let user = ref(JSON.parse(localStorage.getItem('user')))
-
+  let token = ref(localStorage.getItem('token') ||'')
+  let user = ref(JSON.parse(localStorage.getItem('user') || '') || {} as User)
+  const role = ref( localStorage.getItem('role') ||'')
+  const isAdmin = computed(() => role.value == "admin")
+  const isAuthenticated = computed(() => token.value ? true : false)
   function setToken(tokenValue: string) {
     localStorage.setItem('token', tokenValue);
     token.value = tokenValue;
@@ -17,7 +19,6 @@ export const userAuth = defineStore('auth', () => {
   }
   async function validate(){
     try {
-      console.log('token', token)
       const { data } = await api.get("/users/me", {
         headers:{
           Authorization: `Bearer ${token.value}`,

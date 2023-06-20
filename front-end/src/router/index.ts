@@ -5,6 +5,7 @@ import { userAuth } from '@/stores/userAuthStore'
 import AlugarView from '@/views/AlugarView.vue'
 import CreateUserFormView from '@/views/CreateUserFormView.vue'
 import ImovelDetail from '@/views/ImovelDetail.vue'
+import AnunciarView from '@/views/AnunciarView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,7 +26,10 @@ const router = createRouter({
     {
       path: '/alugar',
       name: 'alugar',
-      component: AlugarView
+      component: AlugarView,
+      meta: {
+        auth: true
+      }
     },
     {
       path: '/inscrever',
@@ -36,7 +40,15 @@ const router = createRouter({
       path: '/imovels/:id',
       name: ImovelDetail,
       component: ImovelDetail
-    }
+    },
+    {
+      path: '/anunciar',
+      name: 'anunciarView',
+      component: AnunciarView,
+      meta: {
+        auth: true
+      }
+    },
   ]
 })
 router.beforeEach(async (to, from, next) => {
@@ -57,5 +69,13 @@ router.beforeEach(async (to, from, next) => {
     next();
   }
 })
+// router.beforeEach((to, from) => {
+//   if(to.meta.requiresAdmin && !auth.valida) {
+//       return {
+//           path: '/login',
+//           query: { redirect: to.fullPath }
+//       }
+//   }
+// })
 
 export default router

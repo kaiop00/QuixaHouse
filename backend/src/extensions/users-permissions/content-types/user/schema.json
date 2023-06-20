@@ -66,7 +66,7 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "apartments": {
+    "imovels": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::apartment.apartment",

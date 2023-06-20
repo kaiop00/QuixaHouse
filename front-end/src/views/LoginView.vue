@@ -17,7 +17,6 @@
                 identifier: user.email,
                 password: user.password,
             });
-            console.log('data', data);
             auth.setToken(data.jwt);
             auth.setuser(data.user);
             

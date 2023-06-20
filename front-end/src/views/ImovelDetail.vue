@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Apartment } from '@/Entity/Apartments';
+import type { Imovel } from '@/Entity/Imovel';
 import { api } from '@/service/http';
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router'
@@ -7,7 +7,7 @@ import { coverURL } from '@/service/uploadUtil';
 
 const route = useRoute()
 const id = Number(route.params.id)
-const imovel = ref<Apartment>({} as Apartment)  
+const imovel = ref<Imovel>({} as Imovel)  
 
 
 
@@ -30,7 +30,7 @@ onBeforeMount( async () => {
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img :src="coverURL(imovel.attributes.photos.data.attributes.url)" class="w-100 rounded-start">
+                        <img :src="coverURL(imovel.attributes.photos?.data?.attributes.url)" class="w-100 rounded-start">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -38,7 +38,7 @@ onBeforeMount( async () => {
                             <hr>
                             <div class="text-start">
                                 <p class="card-text">Descrição: {{imovel.attributes.description}}</p>
-                                <p class="card-text">Endereço: {{imovel.attributes.address}}</p>
+                                <p class="card-text">Rua: {{imovel.attributes.street}} - {{ imovel.attributes.number }} Bairro: {{ imovel.attributes.district }}</p>
                                 <p class="card-text"><strong>Preço: <small class="text-danger">{{imovel.attributes.value}}</small></strong></p>
                             </div>
                         </div>

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "apartment",
     "pluralName": "apartments",
-    "displayName": "apartment",
+    "displayName": "Imovels",
     "description": ""
   },
   "options": {
@@ -23,23 +23,14 @@
         "audios"
       ]
     },
-    "rented": {
-      "type": "boolean"
-    },
     "description": {
       "type": "string"
     },
     "value": {
       "type": "biginteger"
     },
-    "address": {
+    "street": {
       "type": "string"
-    },
-    "users_permissions_user": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "apartments"
     },
     "Type": {
       "type": "enumeration",
@@ -47,6 +38,29 @@
         "Casa",
         "Apartamento"
       ]
+    },
+    "district": {
+      "type": "string"
+    },
+    "number": {
+      "type": "biginteger"
+    },
+    "cellphone": {
+      "type": "biginteger"
+    },
+    "operation": {
+      "type": "enumeration",
+      "enum": [
+        "Alugar",
+        "Vender",
+        "Reservar"
+      ]
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "imovels"
     }
   }
 }

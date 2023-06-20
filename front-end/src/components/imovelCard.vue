@@ -3,10 +3,12 @@ import { coverURL} from '@/service/uploadUtil'
 
 defineProps<{
   id: number,
-  photos: string,
+  photos?: string,
   description: string,
-  value: string,
-  address: string,
+  value: number,
+  street: string,
+  district: string,
+  number: number,
 }>()
 </script>
 
