@@ -38,7 +38,7 @@ const router = createRouter({
     },
     {
       path: '/imovels/:id',
-      name: ImovelDetail,
+      name: 'ImovelDetail',
       component: ImovelDetail
     },
     {
@@ -69,6 +69,7 @@ router.beforeEach(async (to, from, next) => {
     next();
   }
 })
+
 // router.beforeEach((to, from) => {
 //   if(to.meta.requiresAdmin && !auth.valida) {
 //       return {
