@@ -1,9 +1,9 @@
 <script setup lang="ts"> 
     import { onMounted, reactive } from "vue";
     import { useRouter } from "vue-router";
-    import { api } from "@/service/http";
+    import { api } from "../service/http";
     import { RouterLink} from 'vue-router'
-    import { userAuth } from '@/stores/userAuthStore'
+    import { userAuth } from '../stores/userAuthStore'
 
     const auth = userAuth();
     const user = reactive({
@@ -99,4 +99,3 @@
     </div>
   </div> -->
 </template>
-

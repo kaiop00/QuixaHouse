@@ -1,3 +1,10 @@
+interface Cover {
+    data: {
+        attributes:{
+            url: string,
+        }
+    }
+}
 export interface User{ 
     id: number,
     username: string,
@@ -7,5 +14,5 @@ export interface User{
     blocked: boolean,
     createdAt: Date,
     updatedAt: Date
-  
+    cover: Cover,
 }

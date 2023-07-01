@@ -26,7 +26,7 @@ function logout(){
     </div>
 
     <div v-if="user.user" class="linkbotao">
-      <RouterLink to="/login">
+      <RouterLink to="/perfil">
         <button type="button" class="btn btn-red">
           <img src="@/assets/user.png" width="30" height="30" alt="img de usuario logado">
         </button>

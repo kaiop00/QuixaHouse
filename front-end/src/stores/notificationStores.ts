@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Message } from '@/Entity/Message'
-import { Status } from '@/Entity/Status'
+import type { Message } from '../Entity/Message'
+import { Status } from '../Entity/Status'
 
 export const useNotificationStore = defineStore('message', () => {
 

@@ -2,9 +2,9 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { reactive, ref } from 'vue';
-  import { useNotificationStore } from '../stores/notificationStores'
-  import { api } from '../service/http'
-  import { userAuth } from '../stores/userAuthStore'
+  import { useNotificationStore } from '../stores/notificationStores';
+  import { api } from '../service/http';
+  import { userAuth } from '../stores/userAuthStore';
   import router from '../router';
   interface Imovel{
     photo: {
@@ -26,22 +26,66 @@
   const alertMessage = ref('')
   const alertFeedback = ref(false)
   const form = ref<Imovel>({} as Imovel)
+  // const form = reactive({
+  //   photos: {} as File,
+  //   description: "asdasdas",
+  //   value: 200,
+  //   street: "asdasd",
+  //   Type: "Casa",
+  //   district: "asdasdas",
+  //   number: 300,
+  //   cellphone: 88981336680,
+  //   operation: "Alugar",
+  //   users_permissions_user: user.user.id,
+  // })
   const photos = ref<File>({} as File)
+  // async function create(){
+    // const formData = new FormData()
+
+    // formData.append('file', cover.value);
+    // console.log('formData', formData);
+    // await api.post("/upload/", {
+    //   body: cover.value
+      
+    // })
+    // .then((response)=>{
+    //   console.log(response);
+    //   const imageId = response.data[0]
+
+    //   api.post("/apartments",{
+    //     ...form,
+    //     photos:imageId})
+    //     .then((response)=>{
+    //       showPositiveAlert('Manga Criado com sucesso')
+    //   }).catch((error)=>{
+    //     showNegativeAlert(`${error}`)
+    //     })
+    // }).catch((error)=>{
+    //   showNegativeAlert(`${error}`)
+    // })
+  //   const formData = new FormData();
+  //   formData.append('file', cover.value);
+  //   await api.post('/upload', formData)
+  //     .then(response => {
+  //       console.log('Arquivo enviado com sucesso:', response.data);
+  //       // Realizar ações adicionais após o upload do arquivo...
+  //     })
+  //     .catch(error => {
+  //       console.error('Erro ao enviar o arquivo:', error);
+  //     });
+  // }
   
   async function create() {
     const body = new FormData()
-    body.append('files.photos', photos.value)
-    body.append('data', JSON.stringify(form.value))
+    body.append('file.photo', photos.value)
     
     try {
         // const photos = cover.value
         console.log('body', body);  
-        const response = await api.post("/apartments/", body,
-        {
+        const response = await api.post('http://localhost:1337/upload/',body,{
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${user.token}`
-        }
+          },
         })
         console.log('response', response.data);
         showPositiveAlert('Manga Criado com sucesso')
@@ -101,59 +145,7 @@
             <label for="coverInput" class="form-label">Adicione Fotos de Seu Imóvel:</label>
             <input type="file" id="coverInput" @change="handleFileUpload" class="form-control">
           </div>
-          <div class="form-floating mb-3 sucesso">
-            <input type="nome" class="form-control" id="floatingInput" v-model="form.street" >
-            <label for="floatingInput">Rua:</label>
-            <div class="invalid-feedback">
-              Insira uma Rua Válido.
-            </div>
-          </div>
           
-          <div class="form-floating mb-3 sucesso">
-            <input type="nome" class="form-control" id="floatingInput" v-model="form.district" >
-            <label for="floatingInput">Bairro:</label>
-            <div class="invalid-feedback">
-              Insira um Bairro válido
-            </div>
-          </div>
-          <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Número:</span>
-            <input type="number" v-model="form.number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Descrição Completa do Apartamento:</label>
-            <textarea class="form-control" v-model="form.description" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-
-          <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-sm">Whatsapp:</span>
-            <input type="text" class="form-control" v-model="form.cellphone" aria-label="Text input with dropdown button">
-          </div>
-          <div class="input-group input-group-sm mb-3">
-            
-            <span class="input-group-text" id="inputGroup-sizing-sm">Operação:</span>
-            <select class="form-select" v-model="form.operation" aria-label="Default select example">
-              <option selected>Qual tipo de operação?</option>
-              <option value="Alugar">Alugar</option>
-              <option value="Reservar">Reservar</option>
-              <option value="Vender">Vender</option>
-            </select>
-            <span class="input-group-text" id="inputGroup-sizing-sm">Valor:</span>
-            <input type="number" v-model="form.value" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="input-group input-group-sm mb-3">
-            
-            <span class="input-group-text" id="inputGroup-sizing-sm">Tipo do Imóvel:</span>
-            <select class="form-select" v-model="form.Type" aria-label="Default select example">
-              <option selected>Qual tipo do Imóvel?</option>
-              <option value="Casa">Casa</option>
-              <option value="Apartamento">Apartamento</option>
-            </select>
-          </div>
-          <!-- <div class="mb-3">
-            <label for="formFileMultiple" class="form-label">Adicione Fotos de Seu Imóvel:</label>
-            <input class="form-control" type="file" id="formFileMultiple" multiple>
-          </div> -->
           <button v-if="props.id" type="submit" class="botao btn btn-danger w-100">Atualizar</button>
           <button v-else type="submit" class="botao btn btn-danger w-100">Anuncie </button>
         </form>
