@@ -6,33 +6,9 @@
   import { api } from '@/service/http'
   import type { Imovel } from '@/Entity/Imovel';
   import { coverURL } from '@/service/uploadUtil';
-  // interface Cover {
-  //   data: {
-  //     attributes:{
-  //       url: string,
-  //       formats: object
-  //     }
-  //   }
-  // }
-  // interface Apartment {
-  //   id: number,
-  //   photos: Cover,
-  //   description: string,
-  //   value: number,
-  //   rented: boolean,
-  //   address: string,
-  //   Type: string,
-  // }
+  
   let apartments = ref<Imovel[]>([]);
-    
-  // onMounted( async () => {
-  //   await api.get("/apartments", {
-  //     params: {
-  //       populate: "photos"
-  //     }
-  //   }).then(response => apartments = response.data.data)
-  //   console.log('apartments', apartments);
-  // })
+
   
   onBeforeMount(async () => {
     const { data } = await api.get("/apartments", {

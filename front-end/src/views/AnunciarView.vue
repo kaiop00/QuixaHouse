@@ -51,7 +51,7 @@ import { coverURL } from '@/service/uploadUtil';
     body.append('data', JSON.stringify(form.value))
     
     try {
-        // const photos = cover.value
+        
         console.log('body', body);  
         const response = await api.post("/apartments/", body,
         {
@@ -66,7 +66,6 @@ import { coverURL } from '@/service/uploadUtil';
         setTimeout(function() {
           window.location.reload();
         }, 600);
-        // router.push("/alugar")
 
       } catch (error) {
         useNotificationStore().error(`${error}`)
@@ -74,17 +73,6 @@ import { coverURL } from '@/service/uploadUtil';
       }
   } 
 
-  // onMounted(async () => {
-  //   if(props.id) {
-  //     const result = await mangaService.getById(props.id)
-  //     if(!useErrorUtil().isAppError(result)) {
-  //       manga.value = result
-  //     } else {
-  //       useNotificationStore().error("Alguma coisa deu errado")
-  //     }
-  //     loading.value = false
-  //   }
-  // })
   function showPositiveAlert(message: string) {
     showAlert(true, message)
   }
@@ -115,7 +103,6 @@ import { coverURL } from '@/service/uploadUtil';
         {{ alertMessage }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      <!-- <div v-if="form"> -->
         <form class="form-floating mb-3 m-3 was-validated needs-validation" @submit.prevent="create()" >
           <div class="mb-3">
             <label for="coverInput" class="form-label">Adicione Fotos de Seu Imóvel:</label>
@@ -170,21 +157,11 @@ import { coverURL } from '@/service/uploadUtil';
               <option value="Apartamento">Apartamento</option>
             </select>
           </div>
-          <!-- <div class="mb-3">
-            <label for="formFileMultiple" class="form-label">Adicione Fotos de Seu Imóvel:</label>
-            <input class="form-control" type="file" id="formFileMultiple" multiple>
-          </div> -->
           <button v-if="props.id" type="submit" class="botao btn btn-danger w-100">Atualizar</button>
           <button v-else type="submit" class="botao btn btn-danger w-100">Anuncie </button>
         </form>
       </div>
-      <!-- <div class="text-center" v-else>
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div> -->
     </div>
-  <!-- </div> -->
 </template>
 
 <style scoped>

@@ -110,13 +110,5 @@ router.beforeEach(async (to, from, next) => {
     next();
   }
 })
-// router.beforeEach((to, from) => {
-//   if(to.meta.requiresAdmin && !auth.valida) {
-//       return {
-//           path: '/login',
-//           query: { redirect: to.fullPath }
-//       }
-//   }
-// })
 
 export default router

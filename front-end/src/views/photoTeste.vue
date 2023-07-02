@@ -26,61 +26,14 @@
   const alertMessage = ref('')
   const alertFeedback = ref(false)
   const form = ref<Imovel>({} as Imovel)
-  // const form = reactive({
-  //   photos: {} as File,
-  //   description: "asdasdas",
-  //   value: 200,
-  //   street: "asdasd",
-  //   Type: "Casa",
-  //   district: "asdasdas",
-  //   number: 300,
-  //   cellphone: 88981336680,
-  //   operation: "Alugar",
-  //   users_permissions_user: user.user.id,
-  // })
+ 
   const photos = ref<File>({} as File)
-  // async function create(){
-    // const formData = new FormData()
-
-    // formData.append('file', cover.value);
-    // console.log('formData', formData);
-    // await api.post("/upload/", {
-    //   body: cover.value
-      
-    // })
-    // .then((response)=>{
-    //   console.log(response);
-    //   const imageId = response.data[0]
-
-    //   api.post("/apartments",{
-    //     ...form,
-    //     photos:imageId})
-    //     .then((response)=>{
-    //       showPositiveAlert('Manga Criado com sucesso')
-    //   }).catch((error)=>{
-    //     showNegativeAlert(`${error}`)
-    //     })
-    // }).catch((error)=>{
-    //   showNegativeAlert(`${error}`)
-    // })
-  //   const formData = new FormData();
-  //   formData.append('file', cover.value);
-  //   await api.post('/upload', formData)
-  //     .then(response => {
-  //       console.log('Arquivo enviado com sucesso:', response.data);
-  //       // Realizar ações adicionais após o upload do arquivo...
-  //     })
-  //     .catch(error => {
-  //       console.error('Erro ao enviar o arquivo:', error);
-  //     });
-  // }
   
   async function create() {
     const body = new FormData()
     body.append('file.photo', photos.value)
     
     try {
-        // const photos = cover.value
         console.log('body', body);  
         const response = await api.post('http://localhost:1337/upload/',body,{
           headers: {
@@ -90,7 +43,6 @@
         console.log('response', response.data);
         showPositiveAlert('Manga Criado com sucesso')
         useNotificationStore().add("Anúncio criado com sucesso")
-        // router.push("/alugar")
 
       } catch (error) {
         useNotificationStore().error(`${error}`)
@@ -98,17 +50,6 @@
       }
   } 
 
-  // onMounted(async () => {
-  //   if(props.id) {
-  //     const result = await mangaService.getById(props.id)
-  //     if(!useErrorUtil().isAppError(result)) {
-  //       manga.value = result
-  //     } else {
-  //       useNotificationStore().error("Alguma coisa deu errado")
-  //     }
-  //     loading.value = false
-  //   }
-  // })
   function showPositiveAlert(message: string) {
     showAlert(true, message)
   }
@@ -150,13 +91,7 @@
           <button v-else type="submit" class="botao btn btn-danger w-100">Anuncie </button>
         </form>
       </div>
-      <!-- <div class="text-center" v-else>
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div> -->
     </div>
-  <!-- </div> -->
 </template>
 
 <style scoped>
