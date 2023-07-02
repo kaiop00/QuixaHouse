@@ -14,7 +14,7 @@ Administrador, Locador, Locatario, Usuário Logado/não logado.
 ## :spiral_calendar: Entidades ou tabelas do sistema
 
 Adicionar imóvel, remover imóvel, editar imóvel, listar imóvel. //  
-Adicionar usuário, remover usuário, editar usuário, listar usuário.
+Adicionar usuário, remover usuário, editar usuário .
 
 
 

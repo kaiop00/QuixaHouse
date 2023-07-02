@@ -1,4 +1,4 @@
-interface Cover {
+export interface Cover {
     data: {
         attributes:{
             url: string,

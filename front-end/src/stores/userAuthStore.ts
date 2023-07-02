@@ -1,14 +1,14 @@
 import { ref, computed, reactive, onMounted } from 'vue'
 import { defineStore } from 'pinia'
-import { api } from '../service/http';
-import type { User } from '../Entity/User';
+import { api } from '@/service/http';
+import type { User } from '@/Entity/User';
 
 export const userAuth = defineStore('auth', () => {
   let token = ref(localStorage.getItem('token') ||'')
-  let user = ref(JSON.parse(localStorage.getItem('user') || '') || {} as User)
-  const role = ref( localStorage.getItem('role') ||'')
-  const isAdmin = computed(() => role.value == "admin")
-  const isAuthenticated = computed(() => token.value ? true : false)
+  let user = ref(JSON.parse(localStorage.getItem('user')))
+  // const role = ref( localStorage.getItem('role') ||'')
+  // // const isAdmin = computed(() => role.value == "admin")
+  // const isAuthenticated = computed(() => token.value ? true : false)
   function setToken(tokenValue: string) {
     localStorage.setItem('token', tokenValue);
     token.value = tokenValue;

@@ -2,10 +2,10 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { reactive, ref } from 'vue';
-  import { useNotificationStore } from '../stores/notificationStores';
-  import { api } from '../service/http';
-  import { userAuth } from '../stores/userAuthStore';
-  import router from '../router';
+  import { useNotificationStore } from '@/stores/notificationStores';
+  import { api } from '@/service/http';
+  import { userAuth } from '@/stores/userAuthStore';
+  import router from '@/router';
   interface Imovel{
     photo: {
       url: string
@@ -176,5 +176,6 @@ max-width:300px;
     padding-left: 70px;
 }
 </style>
+
 
 

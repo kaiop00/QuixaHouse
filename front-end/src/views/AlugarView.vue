@@ -2,10 +2,10 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { onBeforeMount, onMounted, reactive, ref } from 'vue';
-  import imovelCard from '../components/imovelCard.vue'
-  import { api } from '../service/http'
-  import type { Imovel } from '../Entity/Imovel'
-  import { coverURL } from '../service/uploadUtil'
+  import ImovelCard from '@/components/imovelCard.vue'
+  import { api } from '@/service/http'
+  import type { Imovel } from '@/Entity/Imovel';
+  import { coverURL } from '@/service/uploadUtil';
   // interface Cover {
   //   data: {
   //     attributes:{
@@ -43,6 +43,8 @@
     console.log('apartaments', data);
     apartments.value = data.data;   
   })
+
+  
   
 </script>
 

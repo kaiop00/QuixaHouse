@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import { api } from '../service/http';
-import { userAuth } from '../stores/userAuthStore';
+import { api } from '@/service/http';
+import { userAuth } from '@/stores/userAuthStore';
 import { useRouter } from "vue-router";
-import { coverURL } from '../service/uploadUtil';
+import { coverURL } from '@/service/uploadUtil';
 
 const auth = userAuth();
 const cover = ref<File>({} as File)
+let enable = ref<boolean>(true);
 const form = reactive({
     id: auth.user.id,
     username: auth.user.username? auth.user.username : "",
@@ -16,7 +17,12 @@ const form = reactive({
     password2: "",
     cover: auth.user.cover
 });
+function handleEdit(){
+
+  enable.value = !enable.value;
+}
 async function updateUser() {
+  
   const parsedData = {
       username: form.username,
       email: form.email,
@@ -42,6 +48,20 @@ async function updateUser() {
         console.log('data', data)
         auth.updateUser(form.email, form.password)
         console.log('coverMe', coverMe());
+        enable.value = true
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function deleteuser() {
+  try {
+    await api.delete(`/users/${form.id}`,{
+          headers: {
+            Authorization: `Bearer ${auth.token}`
+        }}
+    );
+    router.push("/inscrever")
 
     } catch (error) {
         console.log(error);
@@ -78,9 +98,7 @@ const router = useRouter();
   <div class=" flex-fill">
     <section class="container w-75">
         
-        <form class="form-floating mb-3 m-3" @submit.prevent="updateUser()">
-          <!-- <h2>Meu Perfil</h2>
-          <img src="../assets/logoAluga.png" class="rounded-circle" width="200" height="200"> -->
+        <div class="form-floating mb-3 m-3">
           
           <div class="flex-fill">
             <label for="image-input">
@@ -94,25 +112,43 @@ const router = useRouter();
             <br>
             <input type="file" id="image-input" @change="handleFileUpload" accept="image/*"/>
           </div>
-          <div class="form-floating mb-3">
-            <input type="username" class="form-control" id="floatingInput" v-model="form.username" placeholder="Digite seu nome" required>
+          <div class="forms">
+          <div class="form-floating mb-3 w-50">
+            <input type="username" :readonly="enable" class="form-control" id="floatingInput" v-model="form.username" placeholder="Digite seu nome" required  >
             <label for="floatingInput">Username: </label>
           </div>
-          <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="Digite seu email" v-model="form.email" required>
+          <div class="form-floating mb-3 w-50">
+            <input type="email" :readonly="enable" class="form-control" id="floatingInput" placeholder="Digite seu email" v-model="form.email" required >
             <label for="floatingInput">Email: </label>
           </div>
-          <div class="form-floating mb-3">  
-            <label for="exampleInputPassword2" class="form-label">Nova Senha: </label>
-            <input type="password" v-model="form.password" class="form-control" id="exampleInputPassword2">
+          <div class="form-floating mb-3 w-50">  
+            <input type="password" id="floatingInput" :readonly="enable" v-model="form.password" class="form-control">
+            <label for="floatingInput" class="form-label">Nova Senha: </label>
+            
           </div>
-          <div class="form-floating mb-3">  
-            <label for="exampleInputPassword2" class="form-label">Repita a nova senha: </label>
-            <input type="password" v-model="form.password2" class="form-control" id="exampleInputPassword2">
+          <div class="form-floating mb-3 w-50">  
+            <input id="floatingInput" type="password" :readonly="enable" v-model="form.password2" class="form-control" >
+            <label for="floatingInput" class="form-label">Repita a nova senha: </label>
+            
           </div>
-          <button >Editar meu Perfil</button>
-          <button type="submit">Salvar</button>
-        </form>
+          <div class="d-flex">
+            <button @click="handleEdit()" >Editar meu Perfil</button>
+            <button @click="updateUser()" v-if="!enable">Salvar</button>
+            <button @click="deleteuser()">Excluir meu Perfil</button>
+          </div>
+        </div>
+        
+          
+        </div>
     </section>
   </div>  
 </template>
+
+
+<style scoped>
+.forms{
+  padding-left: 35%;
+  padding-top: 1%;
+}
+</style>
+

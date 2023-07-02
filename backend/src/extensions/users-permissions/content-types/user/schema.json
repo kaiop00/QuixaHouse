@@ -66,11 +66,19 @@
       "inversedBy": "users",
       "configurable": false
     },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "imovels": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::apartment.apartment",
-      "mappedBy": "users_permissions_user"
+      "mappedBy": "user"
     }
   }
 }

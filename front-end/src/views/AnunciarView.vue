@@ -1,11 +1,12 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { reactive, ref } from 'vue';
-  import { useNotificationStore } from '../stores/notificationStores'
-  import { api } from '../service/http'
-  import { userAuth } from '../stores/userAuthStore'
-  import router from '../router';
+  import { onBeforeMount, onMounted, reactive, ref } from 'vue';
+  import { useNotificationStore } from '@/stores/notificationStores';
+  import { api } from '@/service/http';
+  import { userAuth } from '@/stores/userAuthStore';
+  import router from '@/router';
+import { coverURL } from '@/service/uploadUtil';
   interface Imovel{
     photo: {
       url: string
@@ -18,16 +19,32 @@
     number: number,
     cellphone: number,
     operation: string,
-    users_permissions_user: string,
   }
   const user = userAuth()
-  const props = defineProps<{ id?: number}>()
+  const props = defineProps<{id?: number}>()
   const alertVisible = ref(false)
   const alertMessage = ref('')
   const alertFeedback = ref(false)
   const form = ref<Imovel>({} as Imovel)
   const photos = ref<File>({} as File)
-  
+  console.log('id', props.id)
+  onBeforeMount(async () => {
+  if(props.id) {
+    const result = await api.get(`/apartments/${props.id}`,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.token}`
+    }});
+    form.value = {
+      ...result.data,
+      photo:{
+        url: coverURL(result?.data?.attributes.url)
+      }
+    }
+  }
+})
+   
   async function create() {
     const body = new FormData()
     body.append('files.photos', photos.value)
@@ -44,8 +61,11 @@
         }
         })
         console.log('response', response.data);
-        showPositiveAlert('Manga Criado com sucesso')
+        showPositiveAlert('Anúncio criado com sucesso')
         useNotificationStore().add("Anúncio criado com sucesso")
+        setTimeout(function() {
+          window.location.reload();
+        }, 600);
         // router.push("/alugar")
 
       } catch (error) {
@@ -82,13 +102,13 @@
     photos.value = target.files?.item(0) as File;
     console.log('cover', photos.value);
   }
-
+  console.log('form', form.value)
 
 </script>
 
 
 <template>
-  <div class="flex-fill">
+  <div class="flex-fill anuncio">
     <div class="container w-50">
       <div class="col-12 alert alert-dismissible fade show"
         :class="{ 'd-none': !alertVisible, 'alert-success': alertFeedback, 'alert-danger': !alertFeedback }" role="alert">
@@ -169,20 +189,10 @@
 
 <style scoped>
 
-.img-card {
-height: 250px;
-width:250px;
-}
-.btnmsg{
-border-radius: 25px;
-}
-
-.card{
-max-width:300px;
-}
-.botaoanuncio{
-    padding-left: 70px;
+.anuncio {
+  margin-top: 100px;
 }
 </style>
+
 
 

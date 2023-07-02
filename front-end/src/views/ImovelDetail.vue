@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Imovel } from '../Entity/Imovel';
-import { api } from '../service/http';
+import type { Imovel } from '@/Entity/Imovel';
+import { api } from '@/service/http';
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router'
-import { coverURL } from '../service/uploadUtil';
+import { coverURL } from '@/service/uploadUtil';
 
 const route = useRoute()
 const id = Number(route.params.id)

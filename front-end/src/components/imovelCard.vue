@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { coverURL} from '../service/uploadUtil'
+import { coverURL} from '@/service/uploadUtil'
 
 defineProps<{
   id: number,

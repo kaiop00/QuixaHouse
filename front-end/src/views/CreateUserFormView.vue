@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import { reactive, ref } from 'vue';
-import { api } from '../service/http';
-import { userAuth } from '../stores/userAuthStore';
+import { api } from '@/service/http';
+import { userAuth } from '@/stores/userAuthStore';
 import { useRouter } from "vue-router";
 
 const validated = ref(false)
@@ -95,3 +95,4 @@ async function createUser() {
     </div>
   </div>  
 </template>
+

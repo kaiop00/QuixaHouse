@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import { userAuth } from '../stores/userAuthStore'
-import AlugarView from '../views/AlugarView.vue'
-import CreateUserFormView from '../views/CreateUserFormView.vue'
-import ImovelDetail from '../views/ImovelDetail.vue'
-import AnunciarView from '../views/AnunciarView.vue'
-import PageError from '../views/PageError.vue'
-import Perfil from '../views/Perfil.vue'
-import photoPerfil from '../views/photoTeste.vue'
+import LoginView from '@/views/LoginView.vue'
+import { userAuth } from '@/stores/userAuthStore'
+import AlugarView from '@/views/AlugarView.vue'
+import CreateUserFormView from '@/views/CreateUserFormView.vue'
+import ImovelDetail from '@/views/ImovelDetail.vue'
+import AnunciarView from '@/views/AnunciarView.vue'
+import PageError from '@/views/PageError.vue'
+import Perfil from '@/views/Perfil.vue'
+import photoPerfil from '@/views/photoTeste.vue'
+import MyImovelsView from '@/views/MyImovelsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,14 +33,19 @@ const router = createRouter({
       path: '/alugar',
       name: 'alugar',
       component: AlugarView,
-      meta: {
-        auth: true
-      }
     },
     {
       path: '/perfil',
       name: 'perfil',
       component: Perfil,
+      meta: {
+        auth: true
+      }
+    },
+    {
+      path: '/myImovels',
+      name: 'myImovels',
+      component: MyImovelsView,
       meta: {
         auth: true
       }
@@ -55,8 +61,16 @@ const router = createRouter({
       component: ImovelDetail
     },
     {
-      path: '/anunciar',
-      name: 'anunciarView',
+      path: '/anuncio/create',
+      name: 'anuncioCreate',
+      component: AnunciarView,
+      meta: {
+        auth: true
+      }
+    },
+    {
+      path: '/anuncio/edit/:id',
+      name: 'anuncioEdit',
       component: AnunciarView,
       meta: {
         auth: true

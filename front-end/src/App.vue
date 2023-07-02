@@ -1,14 +1,27 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import { userAuth } from './stores/userAuthStore';
-const user = userAuth();
-function logout(){
-  user.clear();
-}
+  import { RouterLink, RouterView } from 'vue-router'
+  import { userAuth } from './stores/userAuthStore';
+  const user = userAuth();
+  function logout(){
+    user.clear();
+  }
+
+  window.addEventListener('scroll', function() {
+    var nav = document.getElementById('meu-nav');
+    var navHeight = nav.offsetHeight;
+    var scrollTop = document.documentElement.scrollTop;
+
+    if (scrollTop > navHeight) {
+      nav.classList.add('nav-scroll');
+    } else {
+      nav.classList.remove('nav-scroll');
+    }
+  });
+
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary flex-fill justify-content-evenly fixed-top mt-3 ">
+  <nav id="meu-nav" class="navbar navbar-expand-lg bg-body-tertiary flex-fill justify-content-evenly fixed-top mb-3">
     <div>
       <RouterLink to="/" ><img src="./assets/logoAluga.png" width="100"
           height="70"></RouterLink>
@@ -22,7 +35,7 @@ function logout(){
       <RouterLink to="/alugar">Alugar</RouterLink>
     </div>
     <div v-if="user.user" class="navlink">
-      <RouterLink to="/anunciar">Anunciar</RouterLink>
+      <RouterLink to="/myImovels">Meus Imóveis</RouterLink>
     </div>
 
     <div v-if="user.user" class="linkbotao">
@@ -43,13 +56,27 @@ function logout(){
       </RouterLink>
     </div>
   </nav>
-  <RouterView />
+  <div class="routes">
+    <RouterView />
+  </div>
+  
 
 
   
 </template>
 
 <style scoped>
+  #meu-nav {
+    background-color: transparent; /* Cor de fundo inicialmente transparente */
+    transition: background-color 0.3s ease; /* Transição suave para a mudança de cor */
+  }
+  .routes{
+    margin-top: 80px;
+  }
+
+  #meu-nav.nav-scroll {
+    background-color: #f5f5f5; /* Cor de fundo quando a página é rolada para baixo */
+  }
   .navlink a {
     text-decoration: none;
     color: rgb(15, 20, 25);
