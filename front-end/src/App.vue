@@ -29,7 +29,7 @@
     </div>  
 
     <div class="navlink">
-      <a href="comprar.html"> Comprar</a>
+      <RouterLink to="/comprar">Comprar</RouterLink>
     </div>
     <div class="navlink">
       <RouterLink to="/alugar">Alugar</RouterLink>
@@ -40,10 +40,7 @@
 
     <div v-if="user.user" class="linkbotao">
       <RouterLink to="/perfil">
-        <button type="button" class="btn btn-red">
-          <img src="@/assets/user.png" width="30" height="30" alt="img de usuario logado">
-        </button>
-        <div>
+        <div class="mt-3">
           <p>Bem vindo, {{ user.user.username }} <button type="button" @click="logout()" id="logout"><i class="bi-box-arrow-right" ></i></button></p>
           
         </div>

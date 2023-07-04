@@ -1,3 +1,5 @@
+import type { User } from "./User"
+
 export interface Cover {
     data: {
         attributes:{
@@ -17,6 +19,12 @@ export interface Imovel {
         number: number,
         cellphone: number,
         operation: string,
-        users_permissions_user: string,
+        user: {
+            data: {
+                attributes: {
+                    username: string
+                }
+            }
+        },
     }
 }

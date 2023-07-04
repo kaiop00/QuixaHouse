@@ -17,15 +17,15 @@ const validationMessage = ref("")
 const auth = userAuth();
 
 const router = useRouter();
-function verificar(){
-  if(form.password != form.password2){
-    validationMessage.value = "Senhas diferentes"
-    return true;
-  }else{
-    validationMessage.value = ""
-    return false;
-  }
-}
+// function verificar(){
+//   if(form.password != form.password2){
+//     validationMessage.value = "Senhas diferentes"
+//     return true;
+//   }else{
+//     validationMessage.value = ""
+//     return false;
+//   }
+// }
 
 async function createUser() {
     try {

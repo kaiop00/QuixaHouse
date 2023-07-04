@@ -34,7 +34,6 @@ async function updateUser() {
   body.append('data', JSON.stringify(parsedData));  
   try {
         
-        console.log('data', parsedData);
         if (form.password != form.password2) {
             alert("Senhas diferentes!");
             return
@@ -67,12 +66,6 @@ async function deleteuser() {
         console.log(error);
     }
 }
-function handleFileUpload(event: Event) {
-  const inputEvent = event as InputEvent
-  const target = inputEvent.target as HTMLInputElement
-  cover.value = target.files?.item(0) as File;
-  console.log('cover', cover.value);
-}
 async function coverMe(){
     try {
       const { data } = await api.get("/users/me", {
@@ -101,16 +94,8 @@ const router = useRouter();
         <div class="form-floating mb-3 m-3">
           
           <div class="flex-fill">
-            <label for="image-input">
-              <div v-if="form.cover">
-                <img v-bind:src="coverURL(form.cover?.data?.attributes.url)" alt="Imagem" id="preview-image" class="round-image" width="150"/>
-              </div>
-              <div v-else>
-                <img src="../assets/user.png" alt="Imagem" id="preview-image" class="round-image" width="150"/>
-              </div>
-            </label>
+            <h2>Meu Perfil</h2>
             <br>
-            <input type="file" id="image-input" @change="handleFileUpload" accept="image/*"/>
           </div>
           <div class="forms">
           <div class="form-floating mb-3 w-50">

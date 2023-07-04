@@ -9,6 +9,7 @@ defineProps<{
   street: string,
   district: string,
   number: number,
+  operation: string,
 }>()
 </script>
 
@@ -23,7 +24,8 @@ defineProps<{
           <p>Valor: R${{ value }}</p>
         </div>
         <div class="d-flex justify-content-center align-items-center">
-          <button type="button" class="btn btn-md bg-danger">Alugar</button>
+          <button v-if="operation === 'Alugar'" type="button" class="btn btn-md bg-danger">Alugar</button>
+          <button v-if="operation === 'Vender'" type="button" class="btn btn-md bg-danger">Comprar</button>
         </div>
       </div>
     </router-link>

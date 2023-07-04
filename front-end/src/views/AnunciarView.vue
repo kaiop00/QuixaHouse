@@ -5,12 +5,12 @@
   import { useNotificationStore } from '@/stores/notificationStores';
   import { api } from '@/service/http';
   import { userAuth } from '@/stores/userAuthStore';
-  import router from '@/router';
-import { coverURL } from '@/service/uploadUtil';
+  import { coverURL } from '@/service/uploadUtil';
+  import { useRoute } from 'vue-router';
+import type { Cover } from '@/Entity/Imovel';
+
   interface Imovel{
-    photo: {
-      url: string
-    },
+    photos?: Cover,
     description: string,
     value: number,
     street: string,
@@ -21,26 +21,25 @@ import { coverURL } from '@/service/uploadUtil';
     operation: string,
   }
   const user = userAuth()
-  const props = defineProps<{id?: number}>()
+  const route = useRoute();
   const alertVisible = ref(false)
   const alertMessage = ref('')
   const alertFeedback = ref(false)
-  const form = ref<Imovel>({} as Imovel)
+  let form = ref<Imovel>({} as Imovel)
   const photos = ref<File>({} as File)
-  console.log('id', props.id)
   onBeforeMount(async () => {
-  if(props.id) {
-    const result = await api.get(`/apartments/${props.id}`,
+  if(route.params.id) {
+    const result = await api.get(`/apartments/${route.params.id}`,
     {
       headers: {
-        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${user.token}`
-    }});
+      },
+      params: {
+        populate: "photos"
+      }});
     form.value = {
-      ...result.data,
-      photo:{
-        url: coverURL(result?.data?.attributes.url)
-      }
+      ...result.data.data.attributes,
+      id: result.data.data.id,
     }
   }
 })
@@ -48,21 +47,68 @@ import { coverURL } from '@/service/uploadUtil';
   async function create() {
     const body = new FormData()
     body.append('files.photos', photos.value)
-    body.append('data', JSON.stringify(form.value))
+    body.append('data', JSON.stringify({
+      user: user.user.id,
+      ...form.value
+    }))
     
     try {
-        
-        console.log('body', body);  
-        const response = await api.post("/apartments/", body,
+        await api.post("/apartments/", body,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${user.token}`
-        }
+          }
         })
-        console.log('response', response.data);
         showPositiveAlert('Anúncio criado com sucesso')
         useNotificationStore().add("Anúncio criado com sucesso")
+        setTimeout(function() {
+          window.location.reload();
+        }, 600);
+
+      } catch (error) {
+        useNotificationStore().error(`${error}`)
+        showNegativeAlert(`${error}`)
+      }
+  } 
+  async function update() {
+    const body = new FormData();
+    const data = {
+      data: {
+        description: form.value.description,
+        value: form.value.value,
+        street: form.value.street,
+        Type: form.value.Type,
+        district: form.value.district,
+        number: form.value.number,
+        cellphone: form.value.cellphone,
+        operation: form.value.operation,
+      }
+    };
+    if(photos.value.size > 0) {
+      body.append('files.photos', photos.value)
+      body.append('data', JSON.stringify(form.value))
+    }
+    try {
+          
+        if(photos.value.size > 0){
+          await api.put(`/apartments/${route.params.id}`, body,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${user.token}`
+          }
+          })
+        }else{
+          await api.put(`/apartments/${route.params.id}`, data,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`
+          }
+          })
+        }
+        showPositiveAlert('Anúncio atualizado com sucesso')
+        useNotificationStore().add("Anúncio atualizado com sucesso")
         setTimeout(function() {
           window.location.reload();
         }, 600);
@@ -88,9 +134,7 @@ import { coverURL } from '@/service/uploadUtil';
     const inputEvent = event as InputEvent
     const target = inputEvent.target as HTMLInputElement
     photos.value = target.files?.item(0) as File;
-    console.log('cover', photos.value);
   }
-  console.log('form', form.value)
 
 </script>
 
@@ -103,7 +147,7 @@ import { coverURL } from '@/service/uploadUtil';
         {{ alertMessage }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-        <form class="form-floating mb-3 m-3 was-validated needs-validation" @submit.prevent="create()" >
+        <div class="form-floating mb-3 m-3 was-validated needs-validation" >
           <div class="mb-3">
             <label for="coverInput" class="form-label">Adicione Fotos de Seu Imóvel:</label>
             <input type="file" id="coverInput" @change="handleFileUpload" class="form-control">
@@ -128,7 +172,7 @@ import { coverURL } from '@/service/uploadUtil';
             <input type="number" v-model="form.number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Descrição Completa do Apartamento:</label>
+            <label for="exampleFormControlTextarea1" class="form-label">Descrição Completa do imóvel:</label>
             <textarea class="form-control" v-model="form.description" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
 
@@ -139,12 +183,12 @@ import { coverURL } from '@/service/uploadUtil';
           <div class="input-group input-group-sm mb-3">
             
             <span class="input-group-text" id="inputGroup-sizing-sm">Operação:</span>
-            <select class="form-select" v-model="form.operation" aria-label="Default select example">
+            <!-- <select class="form-select" v-model="form.operation" aria-label="Default select example">
               <option selected>Qual tipo de operação?</option>
               <option value="Alugar">Alugar</option>
               <option value="Reservar">Reservar</option>
               <option value="Vender">Vender</option>
-            </select>
+            </select> -->
             <span class="input-group-text" id="inputGroup-sizing-sm">Valor:</span>
             <input type="number" v-model="form.value" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
           </div>
@@ -157,9 +201,9 @@ import { coverURL } from '@/service/uploadUtil';
               <option value="Apartamento">Apartamento</option>
             </select>
           </div>
-          <button v-if="props.id" type="submit" class="botao btn btn-danger w-100">Atualizar</button>
-          <button v-else type="submit" class="botao btn btn-danger w-100">Anuncie </button>
-        </form>
+          <button v-if="route.params.id" @click="update()" class="botao btn btn-danger w-100">Atualizar</button>
+          <button v-else @click="create()" class="botao btn btn-danger w-100">Anuncie </button>
+        </div>
       </div>
     </div>
 </template>

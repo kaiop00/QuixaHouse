@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
     defineProps<{
         id: number,
         photos?: string,
@@ -8,6 +9,7 @@
         district: string,
         number: number,
         Type: string,
+        username: string
     }>()
 </script>
 
@@ -15,13 +17,14 @@
 <template>
 <div class="row g-0">
     <div class="col-md-4">
-        <img :src="photos" class="w-100 rounded-start">
+        <img :src="photos" width="200" height="300" class="w-100 rounded-start">
     </div>
     <div class="col-md-8">
         <div class="card-body">
             <h5 class="card-title">{{Type}}</h5>
             <hr>
             <div class="text-start">
+                <p v-if="username" class="card-text">Locatário: {{username}}</p>
                 <p class="card-text">Descrição: {{description}}</p>
                 <p class="card-text">Rua: {{street}} - {{number }} Bairro: {{ district }}</p>
                 <p class="card-text"><strong>Preço: <small class="text-danger">{{value}}</small></strong></p>

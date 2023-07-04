@@ -3,12 +3,13 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import { userAuth } from '@/stores/userAuthStore'
 import AlugarView from '@/views/AlugarView.vue'
+import ComprarView from '@/views/ComprarView.vue'
 import CreateUserFormView from '@/views/CreateUserFormView.vue'
 import ImovelDetail from '@/views/ImovelDetail.vue'
 import AnunciarView from '@/views/AnunciarView.vue'
 import PageError from '@/views/PageError.vue'
 import Perfil from '@/views/Perfil.vue'
-import photoPerfil from '@/views/photoTeste.vue'
+// import photoPerfil from '@/views/photoTeste.vue'
 import MyImovelsView from '@/views/MyImovelsView.vue'
 
 const router = createRouter({
@@ -19,11 +20,11 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
-    {
-      path: '/teste',
-      name: 'teste',
-      component: photoPerfil,
-    },
+    // {
+    //   path: '/teste',
+    //   name: 'teste',
+    //   component: photoPerfil,
+    // },
     {
       path: '/login',
       name: 'login',
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/alugar',
       name: 'alugar',
       component: AlugarView,
+    },
+    {
+      path: '/comprar',
+      name: 'comprar',
+      component: ComprarView,
     },
     {
       path: '/perfil',
@@ -57,7 +63,7 @@ const router = createRouter({
     },
     {
       path: '/imovels/:id',
-      name: ImovelDetail,
+      name: 'ImovelDetail',
       component: ImovelDetail
     },
     {

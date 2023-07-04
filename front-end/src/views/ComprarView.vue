@@ -10,14 +10,13 @@
   let imovels = ref<Imovel[]>([]);
 
   
-  onBeforeMount(async () => {
+  onMounted(async () => {
     const { data } = await api.get("/apartments", {
       params: {
         populate: "*"
       }
     })
-    console.log('apartaments', data);
-    imovels.value = data.data;   
+    imovels.value = data.data; 
   })
 
   
@@ -29,7 +28,7 @@
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col" v-for="imovel in imovels.filter( data => data.attributes.operation === 'Alugar')">
+        <div class="col" v-for="imovel in imovels.filter( data => data.attributes.operation === 'Vender')">
           <ImovelCard
             :id="imovel.id"
             :description="imovel.attributes.description"
@@ -81,17 +80,3 @@
     </div>
   </div> -->
 </template>
-
-<style scoped>
-  .navlink a {
-    text-decoration: none;
-    color: rgb(15, 20, 25);
-    margin-right: 150px;
-  }
-  .navlink a:hover {
-    text-decoration: underline;
-    
-    border-radius: 5px;
-  }
-
-</style>

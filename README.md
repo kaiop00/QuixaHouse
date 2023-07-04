@@ -45,8 +45,13 @@ Locador, Locatario, Usuário Logado/não logado - Apartamento
 ## :neckbeard: Rotas da API REST utilizadas
 
 | Método HTTP | URL |
-| POST | /api/apartments |
+| POST | /api/apartments | 
 | GET  | /api/apartments|
 | PUT  | /api/apartments/:id |
 | DELET| /api/apartments/:id |
+
+| POST | /api/auth/local/register | 
+| GET  | /api/users/me |
+| PUT  | /api/users/:id |
+| DELET| /api/users/:id |
 

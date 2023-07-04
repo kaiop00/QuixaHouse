@@ -1,24 +1,16 @@
 
 <script setup lang="ts">
   import { RouterLink, useRouter } from 'vue-router';
-  import { onBeforeMount, onMounted, reactive, ref } from 'vue';
-  import ImovelDetail from '@/components/imovelDetail.vue'
+  import { onBeforeMount, ref } from 'vue';
+  import imovelDetail from '@/components/imovelDetail.vue'
   import { api } from '@/service/http'
   import type { Cover, Imovel } from '@/Entity/Imovel';
   import { coverURL } from '@/service/uploadUtil';
   import { userAuth } from '@/stores/userAuthStore';
   
-  // interface Cover {
-  //   data: {
-  //     attributes:{
-  //       url: string,
-  //       formats: object
-  //     }
-  //   }
-  // }
   interface MyImovel {
     id: number,
-    photos?: Cover,
+    photos: Cover,
     description: string,
     value: number,
     street: string,
@@ -27,33 +19,19 @@
     Type: string,
   }
   const user = userAuth()
-  const router = useRouter();
   let myImovels = ref<MyImovel[]>([]);
   let allImovels = ref<Imovel[]>([])
-  let showModal = ref(false);
-  // onMounted( async () => {
-  //   await api.get("/apartments", {
-  //     params: {
-  //       populate: "photos"
-  //     }
-  //   }).then(response => apartments = response.data.data)
-  //   console.log('apartments', apartments);
-  // })
-  
+  const route = useRouter();
+
   onBeforeMount(async () => {
     allImovelsGet();
     myImovelsGet();
 
   })
-  function saveModalChanges() {
-      // Lógica para salvar as alterações do modal
-      console.log('Alterações do modal salvas!');
-      showModal.value = false;
-    }
   async function allImovelsGet (){
     const { data } = await api.get("/apartments", {
       params: {
-        populate: "photos"
+        populate: "*"
       }
     })
     allImovels.value = data.data;   
@@ -64,11 +42,11 @@
           Authorization: `Bearer ${user.token}`,
         },
         params:{
-          populate: "imovels"
+          populate: "*"
         }
       })
     allImovels.value.forEach(imovel => {
-      if (data.imovels.find(myimovel => myimovel.id === imovel.id)) {
+      if (data.imovels.find( (myimovel: { id: number; }) => myimovel.id === imovel.id)) {
         myImovels.value.push({
           id: imovel.id,
           ...imovel.attributes
@@ -90,30 +68,35 @@
             console.log(error);
         }
     }
-    console.log('myImovel', myImovels);
 </script>
 
 
 <template>
+  <div class="mb-5 mt-5">
+    <!-- <RouterLink :to="{path: '/anuncio/create/'}"> -->
+      <button type="button" class="btn btn-primary" @click="route.push('/anuncio/create/')">Criar Anúncio</button>
+    <!-- </RouterLink> -->
+  </div>
    <div v-if="myImovels.length >0">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-sm-12">
             <div class="card mb-3" v-for="imovel in myImovels">
-                <ImovelDetail
+                <imovelDetail
                   :id="imovel.id"
                   :photos="coverURL(imovel.photos?.data?.attributes.url)"
                   :description="imovel.description"
                   :value= "imovel.value"
                   :street="imovel.street"
                   :district="imovel.district"
-                  :number="imovel.value"
+                  :number="imovel.number"
                   :Type="imovel.Type"
+                  :username="''"
                 />
                 <div>
-                  <!-- <RouterLink :to="{path: "/anuncio/edit/", query: {id: imovel.id}}">
+                  <RouterLink :to="{path: `/anuncio/edit/${imovel.id}`}">
                     <button type="button" class="btn btn-primary">Editar</button>
                   </RouterLink>
-                   -->
+                  
                   <button type="button" @click="deleteImovel(imovel.id)" class="btn btn-danger">
                       <i class="bi bi-trash"></i>
                   </button>
@@ -125,9 +108,7 @@
    <div v-else>
     <h2>Você não tem nenhum Anúncio publicado!</h2>
    </div>
-    <div>
-      <button type="button" class="btn btn-success" >Criar Anúncio</button>
-    </div>
+    
 </template>
 
 <style scoped>
